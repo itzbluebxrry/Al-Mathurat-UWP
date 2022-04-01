@@ -3,6 +3,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.ApplicationModel.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -16,6 +17,12 @@ namespace Al_Mathurat_UWP
         public MainPage()
         {
             this.InitializeComponent();
+
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            // Set XAML element as a drag region.
+            Window.Current.SetTitleBar(AppTitleBar);
 
 
         }

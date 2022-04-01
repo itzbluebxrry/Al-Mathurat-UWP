@@ -22,7 +22,8 @@ namespace Al_Mathurat_UWP
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
+
+
         }
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace Al_Mathurat_UWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        
+
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -68,21 +69,6 @@ namespace Al_Mathurat_UWP
                 // using Windows.UI;
                 // using Windows.UI.ViewManagement;
 
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-                // Set active window colors
-                titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.ButtonBackgroundColor = Colors.Transparent;
-                titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonHoverBackgroundColor = Colors.Gray;
-                titleBar.ButtonPressedForegroundColor = Colors.Gray;
-                titleBar.ButtonPressedBackgroundColor = Colors.Transparent;
-
-                // Set inactive window colors
-                titleBar.InactiveForegroundColor = Colors.Gainsboro;
-                titleBar.InactiveBackgroundColor = Colors.Transparent;
-                titleBar.ButtonInactiveForegroundColor = Colors.Gainsboro;
-                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             }
 
             // using Windows.UI;
@@ -118,8 +104,6 @@ namespace Al_Mathurat_UWP
         {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Black;
         }
 
 
