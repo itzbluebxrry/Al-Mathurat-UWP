@@ -18,13 +18,13 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>D12499B042312BDBB8FC1865C46FB1664F9772E4</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>D30A85966B73DC8516008982A13D5A4BDD139210</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <AppInstallerUri>F:\Al-Mathurat UWP 1.9.3</AppInstallerUri>
     <HoursBetweenUpdateChecks>168</HoursBetweenUpdateChecks>
@@ -207,13 +207,10 @@
       <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.7.1</Version>
+      <Version>2.8.0-prerelease.220118001</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Al-Mathurat UWP_TemporaryKey.pfx" />
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

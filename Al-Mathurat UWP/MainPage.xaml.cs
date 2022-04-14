@@ -4,7 +4,9 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Core;
-
+using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Controls;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Al_Mathurat_UWP
@@ -17,51 +19,45 @@ namespace Al_Mathurat_UWP
         public MainPage()
         {
             this.InitializeComponent();
-
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-
             // Set XAML element as a drag region.
             Window.Current.SetTitleBar(AppTitleBar);
-
-
+            for (int i = 1; i <= 34;)
+            {
+                AddImage("ms-appx:///Assets/" + i.ToString() + ".jpg");
+                i++;
+            }
+            ImgView.ItemsSource = images;
+            ShowInfoBar("Al-Mathurat UWP is now on Stable!", "Announcement", InfoBarSeverity.Success);
+            nbrbxGoto.Maximum = images.Count;
+            nbrbxGoto.Minimum = 1;
         }
-
-
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            nbrbxGoto.Value = ImgView.SelectedIndex;
         }
 
 
         private async void launchURI_Click(object sender, RoutedEventArgs e)
         {
-            // The URI to launch
-            var uriBing = new Uri("mailto:itzbluebxrry@outlook.com?subject=Al-Mathurat%20UWP%20Feedback");
-
             // Launch the URI
-            var success = await Windows.System.Launcher.LaunchUriAsync(uriBing);
+            var success = await Windows.System.Launcher.LaunchUriAsync(new Uri("mailto:itzbluebxrry@outlook.com?subject=Al-Mathurat%20UWP%20Feedback"));
 
-            // Set the option to show a warning
-            var promptOptions = new Windows.System.LauncherOptions();
-            promptOptions.TreatAsUntrusted = true;
-
-            if (success)
-            {
-                // URI launched
-            }
-            else
-            {
-                // URI launch failed
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
         }
-
+        private void AddImage(string Path)
+        {
+            images.Add(BitMapImages.CreateNewImage(new BitmapImage(new Uri(Path))));
+        }
+        ObservableCollection<BitMapImages> images = new ObservableCollection<BitMapImages>();
         private void ExtendAcrylicIntoTitleBar()
         {
             Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -69,9 +65,53 @@ namespace Al_Mathurat_UWP
             titleBar.ButtonBackgroundColor = Windows.UI.Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
+        private void ShowInfoBar(string Message, string Title = null, InfoBarSeverity? Severity = null, Button ActionButton = null, Style CloseButtonStyle = null,Windows.UI.Xaml.Media.Brush Background = null)
+        {
+            InfoBar infoBar = new InfoBar();
+            infoBar.Margin = new Thickness(0, 92, 0, 0);
+            infoBar.Message = Message;
+            if (Title != null)
+            {
+                infoBar.Title = Title;
+            }
+            if (Severity != null)
+            {
+                infoBar.Severity = (InfoBarSeverity)Severity;
+            }
+            if (ActionButton != null)
+            {
+                infoBar.ActionButton = ActionButton;
+            }
+            if (CloseButtonStyle != null)
+            {
+                infoBar.CloseButtonStyle = CloseButtonStyle;
+            }
+            if (Background != null)
+            {
+                infoBar.Background = Background;
+            }
+            Grid.Children.Add(infoBar);
+            infoBar.IsOpen = true;
+        }
 
-
-
-
+        private void btnNavigatePage_Click(object sender, RoutedEventArgs e)
+        {
+            flyNavigate.Hide();
+            ImgView.SelectedIndex = (int)nbrbxGoto.Value;
+        }
     }
+
+    public class BitMapImages
+    {
+        public BitmapImage Image { get; set; }
+        public BitMapImages(BitmapImage image)
+        {
+            Image = image;
+        }
+        public static BitMapImages CreateNewImage(BitmapImage Image)
+        {
+            return new BitMapImages(Image);
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
-﻿<Page xmlns:my="using:Microsoft.UI.Xaml.Controls" 
+﻿<Page
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     x:Class="Al_Mathurat_UWP.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,87 +7,63 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    my:BackdropMaterial.ApplyToRootOrPageBackground="True">
+    controls:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
-    <Grid>
-        <FlipView MaxWidth="500" MaxHeight="600" HorizontalAlignment="Center" Margin="0,95,0,0" SelectionChanged="FlipView_SelectionChanged">
+    <Grid x:Name="Grid">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition IsStaggeringEnabled="True"/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <FlipView Background="{ThemeResource LayerFillColorDefaultBrush}" x:Name="ImgView" HorizontalAlignment="Center" Margin="0,145,0,0" SelectionChanged="FlipView_SelectionChanged">
 
             <FlipView.ItemsPanel >
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </FlipView.ItemsPanel>
-
-            <Image Source="ms-appx:///Assets/1.jpg" AutomationProperties.Name="1" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/2.jpg" AutomationProperties.Name="2" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/3.jpg" AutomationProperties.Name="3" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/4.jpg" AutomationProperties.Name="4" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/5.jpg" AutomationProperties.Name="5" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/6.jpg" AutomationProperties.Name="6" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/7.jpg" AutomationProperties.Name="7" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/8.jpg" AutomationProperties.Name="8" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/9.jpg" AutomationProperties.Name="9" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/10.jpg" AutomationProperties.Name="10" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/11.jpg" AutomationProperties.Name="11" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/12.jpg" AutomationProperties.Name="12" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/13.jpg" AutomationProperties.Name="13" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/14.jpg" AutomationProperties.Name="14" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/15.jpg" AutomationProperties.Name="15" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/16.jpg" AutomationProperties.Name="16" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/17.jpg" AutomationProperties.Name="17" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/18.jpg" AutomationProperties.Name="18" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/19.jpg" AutomationProperties.Name="19" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/20.jpg" AutomationProperties.Name="20" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/21.jpg" AutomationProperties.Name="21" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/22.jpg" AutomationProperties.Name="22" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/23.jpg" AutomationProperties.Name="23" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/24.jpg" AutomationProperties.Name="24" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/25.jpg" AutomationProperties.Name="25" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/26.jpg" AutomationProperties.Name="26" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/27.jpg" AutomationProperties.Name="27" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/28.jpg" AutomationProperties.Name="28" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/29.jpg" AutomationProperties.Name="29" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/30.jpg" AutomationProperties.Name="30" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/31.jpg" AutomationProperties.Name="31" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/32.jpg" AutomationProperties.Name="32" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/33.jpg" AutomationProperties.Name="33" Height="580" Width="520"/>
-            <Image Source="ms-appx:///Assets/34.jpg" AutomationProperties.Name="34" Height="580" Width="520"/>
+            <FlipView.ItemTemplate>
+                <DataTemplate x:DataType="local:BitMapImages">
+                    <Image Source="{x:Bind Image}" Stretch="Uniform"/>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
 
         </FlipView>
+        <CommandBar DefaultLabelPosition="Right" Margin="0,95,0,0">
+            <AppBarButton Label="Goto" ToolTipService.ToolTip="Go to specific page" Icon="Find">
+                <AppBarButton.Flyout>
+                    <Flyout x:Name="flyNavigate" Placement="Bottom">
+                        <StackPanel Orientation="Horizontal">
+                            <controls:NumberBox SpinButtonPlacementMode="Inline" SmallChange="1" LargeChange="2" x:Name="nbrbxGoto"/>
+                            <Button Margin="5,0,0,0" x:Name="btnNavigatePage" Click="btnNavigatePage_Click">
+                                <SymbolIcon Symbol="Find"/>
+                            </Button>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </CommandBar>
+        <Grid CornerRadius="5,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
+            <Button ToolTipService.ToolTip="Support the developer!" Style="{StaticResource AccentButtonStyle}" Width="144" Content="Show your support" Margin="10,10,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Click="Button_Click" Height="32">
+                <Button.RenderTransform>
+                    <CompositeTransform SkewX="0" TranslateX="0"/>
+                </Button.RenderTransform>
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel MaxWidth="400">
+                            <ScrollBar/>
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20" Text="Support the developer" Margin="0,0,0,12" />
+                            <Image Source="ms-appx:///assets/heart.png" Height="100" Width="100"/>
+                            <TextBlock/>
+                            <TextBlock TextWrapping="WrapWholeWords" Text="Al-Mathurat UWP's development requires lot of times and efforts. And I don't make money from them. If you like this app, consider supporting me by subscribing controls channel on YouTube."/>
+                            <TextBlock/>
+                            <HyperlinkButton NavigateUri="https://youtube.com/c/ItzBluebxrry?sub_confirmation=1" Content="Subscribe on YouTube"/>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
 
-        <Button ToolTipService.ToolTip="Support the developer!" Style="{StaticResource AccentButtonStyle}" Width="144" Content="Show your support" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Click="Button_Click" Height="32">
-            <Button.RenderTransform>
-                <CompositeTransform SkewX="0" TranslateX="0"/>
-            </Button.RenderTransform>
-            <Button.Flyout>
-                <Flyout>
-                    <StackPanel MaxWidth="400">
-                        <ScrollBar/>
-                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20" Text="Support the developer" Margin="0,0,0,12" />
-                        <Image Source="ms-appx:///assets/heart.png" Height="100" Width="100"/>
-                        <TextBlock/>
-                        <TextBlock TextWrapping="WrapWholeWords" Text="Al-Mathurat UWP's development requires lot of times and efforts. And I don't make money from them. If you like this app, consider supporting me by subscribing my channel on YouTube."/>
-                        <TextBlock/>
-                        <HyperlinkButton NavigateUri="https://youtube.com/c/ItzBluebxrry?sub_confirmation=1" Content="Subscribe on YouTube"/>
-                    </StackPanel>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
-
-        <my:InfoBar Margin="0, 92, 0, 0"
-    Background="{ThemeResource AppBarBackgroundThemeBrush}"
-    IsOpen="True"
-    Severity="Informational"
-    Title="Tips"
-    Message="Resize this window to ensure the app is aligned correctly." Height="44" VerticalAlignment="Top"></my:InfoBar>
-
-
-        <my:InfoBar Margin="0, 92, 0, 0"
-    IsOpen="True"
-    Severity="Success"
-    Title="Announcement"
-    Message="Al-Mathurat UWP is now on Stable!" Height="44" VerticalAlignment="Top">
-        </my:InfoBar>
         <TextBlock ToolTipService.ToolTip="Al-Mathurat UWP 1.9.3" Style="{ThemeResource BaseTextBlockStyle}" Text="Al-Mathurat" FontSize="30" Margin="30,27,0,0" Height="44" VerticalAlignment="Top" HorizontalAlignment="Left" Width="209"/>
         <Grid x:Name="AppTitleBar" Background="Transparent" Height="80" VerticalAlignment="Top">
             <!-- Width of the padding columns is set in LayoutMetricsChanged handler. -->
@@ -98,55 +75,56 @@
                 <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Button Width="100" Content="Feedback?" ToolTipService.ToolTip="Have something to say?" Margin="0,50,125,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="32">
-            <Button.Flyout>
-                <Flyout>
-                    <StackPanel MaxWidth="400">
-                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20" Text="Have something to say?" Margin="0,0,0,12" />
-                        <TextBlock/>
-                        <Image Source="ms-appx:///assets/feedback.png" Width="100" Height="100"/>
-                        <TextBlock/>
-                        <TextBlock TextWrapping="WrapWholeWords" Text="You can submit bug reports or even your thoughts about this app by dropping a word in my mailbox!"/>
-                        <TextBlock/>
-                        <Button Content="Send a feedback" Click="launchURI_Click"/>
-                    </StackPanel>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
-        <Button Content="About" Margin="0,50,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" ToolTipService.ToolTip="View app additional info" RenderTransformOrigin="0.52,0.156">
-            <Button.Flyout>
-                <Flyout>
-                    <StackPanel MaxWidth="400">
-                        <ScrollBar/>
-                        <my:ProgressBar Width="400" IsIndeterminate="True" ShowPaused="False" ShowError="False" />
-                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20" Text="No updates available." Margin="0,0,0,12" />
-                        <TextBlock Text="We'll continue to check for updates in the background."/>
-                        <TextBlock/>
-                        <TextBlock Text="Current version: 1.9.3.0 (Stable)"/>
-                        <TextBlock><Run Text="Update server: "/><Hyperlink NavigateUri="https://home.itzbluebxrry.ml"><Run Text="https://itzbluebxrry.ml"/></Hyperlink></TextBlock>
-                        <TextBlock/>
-                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20">About this app</TextBlock>
-                        <TextBlock>Al-Mathurat UWP 1.9.3.0</TextBlock>
-                        <TextBlock>© 2021-2022 ItzBluebxrry</TextBlock>
-                        <TextBlock/>
-                        <TextBlock TextWrapping="WrapWholeWords" Text="Al-Mathurat UWP is an app programmed in C# based on Universal Windows Platform (UWP)."/>
-                        <TextBlock/>
-                        <HyperlinkButton NavigateUri="https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide" Content="What is UWP?"/>
-                        <TextBlock/>
-                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="Assets"/>
-                        <TextBlock TextWrapping="WrapWholeWords"><Run Text="The Mathurat pages are in PNG, converted from the original PDF files provided by "/><Hyperlink NavigateUri="https://www.islam.gov.my/ms/"><Run Text="JAKIM"/></Hyperlink><Run Text="."/></TextBlock>
-                        <TextBlock><Run Text="Fluent icons and logo assets are provided by "/><Hyperlink NavigateUri="https://icons8.com"><Run Text="Icons8"/></Hyperlink><Run Text="."/></TextBlock>
-                        <TextBlock/>
-                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}"><Run Text="For developers"/></TextBlock>
-                        <TextBlock Text="These options are intended for experienced developers. Some of the options are disabled for security reasons." TextWrapping="WrapWholeWords"/>
-                        <TextBlock/>
-                        <HyperlinkButton Content="Get source codes (Github)" ToolTipService.ToolTip="Visit Al-Mathurat UWP's repository" NavigateUri="https://github.com/itzbluebxrry/Al-Mathurat-UWP"/>
+        <StackPanel Margin="0,50,0,0" VerticalAlignment="Top"  HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Width="100" Content="Feedback?" ToolTipService.ToolTip="Have something to say?" VerticalAlignment="Top" Height="32">
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel MaxWidth="400">
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20" Text="Have something to say?" Margin="0,0,0,12" />
+                            <TextBlock/>
+                            <Image Source="ms-appx:///assets/feedback.png" Width="100" Height="100"/>
+                            <TextBlock/>
+                            <TextBlock TextWrapping="WrapWholeWords" Text="You can submit bug reports or even your thoughts about this app by dropping a word in controls mailbox!"/>
+                            <TextBlock/>
+                            <Button Content="Send a feedback" Click="launchURI_Click"/>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            <Button Content="About" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" ToolTipService.ToolTip="View app additional info" >
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel MaxWidth="400">
+                            <ScrollBar/>
+                            <controls:ProgressBar Width="400" IsIndeterminate="True" ShowPaused="False" ShowError="False" />
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20" Text="No updates available." Margin="0,0,0,12" />
+                            <TextBlock Text="We'll continue to check for updates in the background."/>
+                            <TextBlock/>
+                            <TextBlock Text="Current version: 1.9.3.0 (Stable)"/>
+                            <TextBlock><Run Text="Update server: "/><Hyperlink NavigateUri="https://home.itzbluebxrry.ml"><Run Text="https://itzbluebxrry.ml"/></Hyperlink></TextBlock>
+                            <TextBlock/>
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20">About this app</TextBlock>
+                            <TextBlock>Al-Mathurat UWP 1.9.3.0</TextBlock>
+                            <TextBlock>© 2021-2022 ItzBluebxrry</TextBlock>
+                            <TextBlock/>
+                            <TextBlock TextWrapping="WrapWholeWords" Text="Al-Mathurat UWP is an app programmed in C# based on Universal Windows Platform (UWP)."/>
+                            <TextBlock/>
+                            <HyperlinkButton NavigateUri="https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide" Content="What is UWP?"/>
+                            <TextBlock/>
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="Assets"/>
+                            <TextBlock TextWrapping="WrapWholeWords"><Run Text="The Mathurat pages are in PNG, converted from the original PDF files provided by "/><Hyperlink NavigateUri="https://www.islam.gov.controls/ms/"><Run Text="JAKIM"/></Hyperlink><Run Text="."/></TextBlock>
+                            <TextBlock><Run Text="Fluent icons and logo assets are provided by "/><Hyperlink NavigateUri="https://icons8.com"><Run Text="Icons8"/></Hyperlink><Run Text="."/></TextBlock>
+                            <TextBlock/>
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}"><Run Text="For developers"/></TextBlock>
+                            <TextBlock Text="These options are intended for experienced developers. Some of the options are disabled for security reasons." TextWrapping="WrapWholeWords"/>
+                            <TextBlock/>
+                            <HyperlinkButton Content="Get source codes (Github)" ToolTipService.ToolTip="Visit Al-Mathurat UWP's repository" NavigateUri="https://github.com/itzbluebxrry/Al-Mathurat-UWP"/>
 
-                    </StackPanel>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
-
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </StackPanel>
 
     </Grid>
 </Page>
