@@ -33,13 +33,17 @@ namespace Al_Mathurat_UWP
             }
             ImgView.ItemsSource = images;
             ShowInfoBar("Al-Mathurat UWP is now on Stable!", "Announcement", InfoBarSeverity.Success);
+            scrBar.Maximum = images.Count - 1;
+            scrBar.Minimum = 0;
+            scrBar.Value = ImgView.SelectedIndex;
             nbrbxGoto.Maximum = images.Count;
             nbrbxGoto.Minimum = 1;
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            nbrbxGoto.Value = ImgView.SelectedIndex;
+            nbrbxGoto.Value = ImgView.SelectedIndex + 1;
+            scrBar.Value = ImgView.SelectedIndex + 1;
         }
 
 
@@ -97,7 +101,13 @@ namespace Al_Mathurat_UWP
         private void btnNavigatePage_Click(object sender, RoutedEventArgs e)
         {
             flyNavigate.Hide();
-            ImgView.SelectedIndex = (int)nbrbxGoto.Value;
+            ImgView.SelectedIndex = ((int)nbrbxGoto.Value) - 1;
+        }
+
+        private void scrBar_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+
+            ImgView.SelectedIndex = ((int)scrBar.Value) - 1;
         }
     }
 
