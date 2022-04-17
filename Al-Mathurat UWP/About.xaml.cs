@@ -20,6 +20,7 @@ namespace Al_Mathurat_UWP
 {
     public sealed partial class About : ContentDialog
     {
+        public bool RequestedUpdates { get; set; }
         public About()
         {
             this.InitializeComponent();
