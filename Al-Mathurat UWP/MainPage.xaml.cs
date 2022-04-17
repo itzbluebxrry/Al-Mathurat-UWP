@@ -7,13 +7,10 @@ using Windows.ApplicationModel.Core;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Controls;
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace Al_Mathurat_UWP
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         public MainPage()
@@ -24,7 +21,6 @@ namespace Al_Mathurat_UWP
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-            // Set XAML element as a drag region.
             Window.Current.SetTitleBar(AppTitleBar);
             for (int i = 1; i <= 34;)
             {
@@ -32,9 +28,12 @@ namespace Al_Mathurat_UWP
                 i++;
             }
             ImgView.ItemsSource = images;
-            ShowInfoBar("Al-Mathurat UWP is now on Stable!", "Announcement", InfoBarSeverity.Success);
-            scrBar.Maximum = images.Count - 1;
-            scrBar.Minimum = 0;
+            if (SystemInformation.Instance.IsFirstRun)
+            {
+                ShowInfoBar("Al-Mathurat UWP is now on Stable!", "Announcement", InfoBarSeverity.Success);
+            }
+            scrBar.Maximum = images.Count;
+            scrBar.Minimum = 1;
             scrBar.Value = ImgView.SelectedIndex;
             nbrbxGoto.Maximum = images.Count;
             nbrbxGoto.Minimum = 1;
@@ -44,14 +43,13 @@ namespace Al_Mathurat_UWP
         {
             nbrbxGoto.Value = ImgView.SelectedIndex + 1;
             scrBar.Value = ImgView.SelectedIndex + 1;
+            txtPageNo.Text = nbrbxGoto.Value.ToString() + " of " + images.Count;
         }
 
 
         private async void launchURI_Click(object sender, RoutedEventArgs e)
         {
-            // Launch the URI
-            var success = await Windows.System.Launcher.LaunchUriAsync(new Uri("mailto:itzbluebxrry@outlook.com?subject=Al-Mathurat%20UWP%20Feedback"));
-
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("mailto:itzbluebxrry@outlook.com?subject=Al-Mathurat%20UWP%20Feedback"));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -62,14 +60,8 @@ namespace Al_Mathurat_UWP
             images.Add(BitMapImages.CreateNewImage(new BitmapImage(new Uri(Path))));
         }
         ObservableCollection<BitMapImages> images = new ObservableCollection<BitMapImages>();
-        private void ExtendAcrylicIntoTitleBar()
-        {
-            Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            Windows.UI.ViewManagement.ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Windows.UI.Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-        }
-        private void ShowInfoBar(string Message, string Title = null, InfoBarSeverity? Severity = null, Button ActionButton = null, Style CloseButtonStyle = null,Windows.UI.Xaml.Media.Brush Background = null)
+
+        private void ShowInfoBar(string Message, string Title = null, InfoBarSeverity? Severity = null, Button ActionButton = null, Style CloseButtonStyle = null, Windows.UI.Xaml.Media.Brush Background = null)
         {
             InfoBar infoBar = new InfoBar();
             infoBar.Margin = new Thickness(0, 92, 0, 0);
@@ -108,6 +100,11 @@ namespace Al_Mathurat_UWP
         {
 
             ImgView.SelectedIndex = ((int)scrBar.Value) - 1;
+        }
+
+        private async void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            await new About().ShowAsync();
         }
     }
 

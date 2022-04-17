@@ -15,8 +15,9 @@
                 <EntranceThemeTransition IsStaggeringEnabled="True"/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-        <ScrollBar Orientation="Vertical" IndicatorMode="MouseIndicator"  HorizontalAlignment="Right" Canvas.ZIndex="111" x:Name="scrBar" ValueChanged="scrBar_ValueChanged" SmallChange="1" LargeChange="1" Margin="0,155,0,65"/>
-        <FlipView Background="{ThemeResource LayerFillColorDefaultBrush}" x:Name="ImgView" HorizontalAlignment="Center" Margin="0,145,0,0" SelectionChanged="FlipView_SelectionChanged">
+        <ScrollBar Orientation="Vertical" IndicatorMode="MouseIndicator" HorizontalAlignment="Right" Canvas.ZIndex="111" x:Name="scrBar" ValueChanged="scrBar_ValueChanged" SmallChange="1" LargeChange="1" Margin="0,145,0,60"/>
+        
+        <FlipView Canvas.ZIndex="12" Background="{ThemeResource LayerFillColorDefaultBrush}" x:Name="ImgView" HorizontalAlignment="Center" Margin="0,145,0,0" SelectionChanged="FlipView_SelectionChanged">
 
             <FlipView.ItemsPanel >
                 <ItemsPanelTemplate>
@@ -30,6 +31,7 @@
             </FlipView.ItemTemplate>
 
         </FlipView>
+        <TextBlock x:Name="txtPageNo" Margin="15,115,0,0" FontSize="15" Text="0 of 44"/>
         <CommandBar DefaultLabelPosition="Right" Margin="0,95,0,0">
             <AppBarButton Label="Goto" ToolTipService.ToolTip="Go to specific page" Icon="Find">
                 <AppBarButton.Flyout>
@@ -44,7 +46,7 @@
                 </AppBarButton.Flyout>
             </AppBarButton>
         </CommandBar>
-        <Grid CornerRadius="5,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
+        <Grid Canvas.ZIndex="13" CornerRadius="5,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
             <Button ToolTipService.ToolTip="Support the developer!" Style="{StaticResource AccentButtonStyle}" Width="144" Content="Show your support" Margin="10,10,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Click="Button_Click" Height="32">
                 <Button.RenderTransform>
                     <CompositeTransform SkewX="0" TranslateX="0"/>
@@ -92,39 +94,7 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
-            <Button Content="About" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" ToolTipService.ToolTip="View app additional info" >
-                <Button.Flyout>
-                    <Flyout>
-                        <StackPanel MaxWidth="400">
-                            <ScrollBar/>
-                            <controls:ProgressBar Width="400" IsIndeterminate="True" ShowPaused="False" ShowError="False" />
-                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20" Text="No updates available." Margin="0,0,0,12" />
-                            <TextBlock Text="We'll continue to check for updates in the background."/>
-                            <TextBlock/>
-                            <TextBlock Text="Current version: 1.9.3.0 (Stable)"/>
-                            <TextBlock><Run Text="Update server: "/><Hyperlink NavigateUri="https://home.itzbluebxrry.ml"><Run Text="https://itzbluebxrry.ml"/></Hyperlink></TextBlock>
-                            <TextBlock/>
-                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" FontSize="20">About this app</TextBlock>
-                            <TextBlock>Al-Mathurat UWP 1.9.3.0</TextBlock>
-                            <TextBlock>© 2021-2022 ItzBluebxrry</TextBlock>
-                            <TextBlock/>
-                            <TextBlock TextWrapping="WrapWholeWords" Text="Al-Mathurat UWP is an app programmed in C# based on Universal Windows Platform (UWP)."/>
-                            <TextBlock/>
-                            <HyperlinkButton NavigateUri="https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide" Content="What is UWP?"/>
-                            <TextBlock/>
-                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="Assets"/>
-                            <TextBlock TextWrapping="WrapWholeWords"><Run Text="The Mathurat pages are in PNG, converted from the original PDF files provided by "/><Hyperlink NavigateUri="https://www.islam.gov.controls/ms/"><Run Text="JAKIM"/></Hyperlink><Run Text="."/></TextBlock>
-                            <TextBlock><Run Text="Fluent icons and logo assets are provided by "/><Hyperlink NavigateUri="https://icons8.com"><Run Text="Icons8"/></Hyperlink><Run Text="."/></TextBlock>
-                            <TextBlock/>
-                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}"><Run Text="For developers"/></TextBlock>
-                            <TextBlock Text="These options are intended for experienced developers. Some of the options are disabled for security reasons." TextWrapping="WrapWholeWords"/>
-                            <TextBlock/>
-                            <HyperlinkButton Content="Get source codes (Github)" ToolTipService.ToolTip="Visit Al-Mathurat UWP's repository" NavigateUri="https://github.com/itzbluebxrry/Al-Mathurat-UWP"/>
-
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
+            <Button Content="About" x:Name="btnAbout" Click="btnAbout_Click" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" ToolTipService.ToolTip="View app additional info" />
         </StackPanel>
 
     </Grid>
